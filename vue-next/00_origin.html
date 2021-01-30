@@ -1,0 +1,27 @@
+<html lang="en">
+  <body>
+    <div id="app">
+      <input/>
+      <button></button>
+    </div>
+    <script>
+      const data={
+        msg:'hello i',
+      }
+      function update(){
+        document.querySelector('button').innerHTML=data.msg;
+        document.querySelector('input').value=data.msg;
+      }
+
+      document.querySelector('input').addEventListener('keyup',function(){
+        data.msg=this.value;
+        update();
+      })
+      document.querySelector('button').addEventListener('click',function(){
+        data.msg=data.msg.split('').reverse().join('');
+        update()
+      })
+      update()
+    </script>
+  </body>
+</html>

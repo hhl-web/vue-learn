@@ -20,7 +20,7 @@ function proxy(target, sourceKey, key) {
 
 proxy(_data, "key", "abc");
 console.log(_data.abc); //abc
-//使用es6的Proxy实现代理，那么target对象的所有属性都会代理，日志记录操作。代理对象和目标对象是浅拷贝
+//使用es6的Proxy实现代理，那么target对象的所有属性都会被代理，可以使用在日志记录操作之类的场景。代理对象和目标对象是浅拷贝
 let p = new Proxy(_data, {
     get: (target, key) => {
         console.log("target:", target, "key:", key);
