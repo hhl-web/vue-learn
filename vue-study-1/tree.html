@@ -1,0 +1,124 @@
+<<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    
+    <script>
+      var dataAll=[ 
+              {
+                "node_id": 1, 		// 节点ID
+                "parent_id": 0,	// 本节点的父节点ID，0 表示没有父节点，即根节点
+                "name": 'xxxx',
+              },
+              {
+                "node_id": 5,
+                "parent_id": 1,    // 本节点的父节点为 node_id = 1 的节点
+                "name": 'xxxxx',
+              },
+              
+            ];
+      //做映射表
+      let treeMapList=dataAll.reduce((memo,current)=>{
+          memo[current["node_id"]]=current;
+          return memo;
+      },{});
+     let result=dataAll.reduce((arr,current)=>{
+          let parent_id=current.parent_id;   //找到当前的父亲
+          let parent=treeMapList[parent_id];  //去映射表看看是否有父亲
+          if(parent){
+            // current.parent=parent;    //给当前设置父亲。
+            parent.children?parent.children.push(current):parent.children=[current];    //给找到的父亲设置孩子，孩子为当前数据，可能不止一个。
+          }else if(parent_id===0){    //当为根的情况
+              current.parent=null;    //设置父亲是null
+              arr.push(current);
+          }
+          return arr;
+      },[])
+      // var obj={...result};
+      console.log('result：',result);
+      console.log('treeMapList:',treeMapList);
+    </script>
+  </body>
+  <script>
+let arr = [
+  {
+    "user_id": "14",
+    "site_name": "快宝急送",
+    "courier_info": "公司简介-13566666666",
+    "waybill_source": [
+      {
+        "brand_name": "暂无",
+        "price": "暂无",
+        "quantity": "暂无",
+        "status": "暂无"
+      }
+    ]
+  },
+  {
+    "user_id": "16",
+    "site_name": "快宝急送",
+    "courier_info": "18721008362-13478936245",
+  },
+  {
+    "user_id": "15",
+    "site_name": "快宝急送",
+    "courier_info": "18721008362-13478936245",
+    "waybill_source": [
+      {
+        "status": "已开启",
+        "price": "15.20",
+        "brand_type": "STO",
+        "quantity": "210"
+      },
+      {
+        "status": "已关闭",
+        "price": "11.20",
+        "brand_type": "SF",
+        "quantity": "390"
+      },
+      {
+        "status": "已开启",
+        "price": "13.20",
+        "brand_type": "SF",
+        "quantity": "798"
+      },
+      {
+        "status": "已开启",
+        "price": "15.20",
+        "brand_type": "YH",
+        "quantity": "70"
+      }
+    ]
+  },
+]
+  let waybillArr=arr.map(item=>{
+    if(item.waybill_source){
+      let arr=item.waybill_source.map(value=>{
+        return {...item,...value}
+      });
+      return arr;
+    }else{
+      return [item];
+    }
+  });
+  console.log(waybillArr.flat())
+  // let mapArr=waybillArr.reduce((pre,cur,index,arr)=>{
+  //   pre=[...pre,...cur]
+  //   return pre;
+  // },[]);
+  // console.log(mapArr);
+  </script>
+</html>

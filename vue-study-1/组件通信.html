@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+            // vue是单向数据流，也就是父传给子的数据，在子组件里不能直接更改，如果想改，应该回传给父，让父改之后再传给子；或者在子组件里定义一个存放父传给子组件数据的变量，更改子组件自己定义的数据。
+            // 1、父子组件：父向子传值：通过在子组件绑定属性即通过props，子向父传值：通过在子组件绑定事件，vm.$on('eventNane',fn)，fn是在父定义的函数，用来接收子传给父的值。子通过vm.$emit('eventName',value)触发事件函数将值传递。
+            // 2、父子孙组件三级以上的关系也可以通过上面的方式，但是比较麻烦。也可以直接通过vue提供的$parent,$children Api寻找父亲和孩子，然后直接触发要目标组件的事件所对应的函数即可。
+            // 3、自下而上的传播。找到所有的父级，如果父组件绑定了相同的事件，该事件都会被触发。
+            // 封装函数 dispatch  一个孩子只有一个父，父可能还有父
+            // Vue.prototype.$dispath=function(eventName,value){
+            //     let parent=this.$parent;
+            //     while(parent){
+            //         parent.$emit(eventName,value);
+            //         parent=parent.$parent;
+            //     }
+            // }
+            // 4、自上而下的传播。找到所有的孩子，如果孩子绑定了相同的事件，也都会被触发。
+            // Vue.prototype.$boardcast=function(eventName,value){
+            //     let children=this.$children;
+            //     let boardcast=function(children){
+            //         children.forEach((item)=>{
+            //             item.$emit(eventName,value);
+            //             if(item.$children){
+            //                 boardcast(item.$children)
+            //             }
+            //         })
+            //     }
+            //     boardcast(children);
+            // }
+            // 通过递归封装函数
+            // 5、ref 通过绑定ref属性，拿到真实dom可直接或许子组件的数据和方法
+            // 6、通过$attrs找到所有父传给子的所有属性集合，通过 $listeners找到所有父传给子的所有方法集合（如果组件中使用了 props 就会将 attrs 从当前$attrs移除掉）
+            // 7、eventbus 全局的订阅发布，通过在Vue原型上绑定一个全局的vue实例。
+            // 创建一个全局的发布订阅  偶尔用一次还ok
+            // Vue.prototype.$bus = new Vue(); // vm.$on $emit
+
+
+        //组件通信的语法糖
+        // <Son2 :count="count" @update:count="newValue=>count = newValue"></Son2> 
+        // 1.这个写法是上面的替代品 默认组件内部需要触发 update:count 规定写法 
+        //  <Son2 :count.sync="count"></Son2> 
+        // <Son2 :value="count" @input="newValue=>count = newValue"></Son2>
+        // 2.这个写法是上面的替代品 默认组件内部需要触发 input 规定写法
+        // <Son2 v-model="count"></Son2>
+        // v-model 局限只能传递一个属性 如果只有一个 可以使用 v-model， 多个依然需要使用.sync 
+        </script>
+        <script src="" async defer></script>
+    </body>
+</html>
